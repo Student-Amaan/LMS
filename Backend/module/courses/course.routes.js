@@ -3,6 +3,8 @@ const authenticate = require("../../middlewares/auth.middleware");
 const {
   createCourseController,
   getCoursesController,
+  getSingleCourseController,
+  updateCourseController,
 } = require("./course.controller");
 const authorize = require("../../middlewares/authorization");
 
@@ -20,5 +22,19 @@ courseRouter.get(
   authenticate,
   authorize("admin"),
   getCoursesController,
+);
+
+courseRouter.get(
+  "/courses/:id",
+  authenticate,
+  authorize("admin"),
+  getSingleCourseController,
+);
+
+courseRouter.patch(
+  "/courses/:id/update",
+  authenticate,
+  authorize("admin"),
+  updateCourseController,
 );
 module.exports = courseRouter;
