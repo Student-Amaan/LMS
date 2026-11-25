@@ -43,7 +43,6 @@ const getSingleCourse = async (id) => {
   return course;
 };
 
-
 const updateCourse = async (id, data) => {
   // 1. Check if data is provided
   if (!data) {
@@ -109,5 +108,41 @@ const updateCourse = async (id, data) => {
   return course;
 };
 
+const archiveCourse = async (id) => {
+  if (!id) {
+    throw new AppError("Please provide id", 400);
+  }
+  const course = await Course.findById(id);
+  if (!course) {
+    throw new AppError("Course not found", 404);
+  }
+  if (course.status === "archived") {
+    throw new AppError("Course has already been archieved", 409);
+  }
+  course.status = "archived";
+  await course.save();
+  return course;
+};
 
-module.exports = { createCourse, getCourses, getSingleCourse, updateCourse };
+const activateCourse = async ( id ) => {
+  const course = await Course.findById( id )
+  if(!course){
+    throw new AppError("Course not found", 404)
+  }
+  if(course.status == "active"){
+    throw new AppError("this course is already active", 409)
+  }
+
+  course.status = "active"
+  await course.save()
+  return course
+}
+
+module.exports = {
+  createCourse,
+  getCourses,
+  getSingleCourse,
+  updateCourse,
+  archiveCourse,
+  activateCourse
+};

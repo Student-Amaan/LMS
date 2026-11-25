@@ -2,7 +2,9 @@ const {
   createCourse,
   getCourses,
   getSingleCourse,
-  updateCourse
+  updateCourse,
+  archiveCourse,
+  activateCourse
 } = require("./course.service");
 
 const createCourseController = async (req, res) => {
@@ -27,9 +29,28 @@ const updateCourseController = async(req, res) => {
   return res.status(200).json({success: true, data: course})
 }
 
+const archiveCourseController = async(req, res) => {
+  const {id} = req.params;
+  const course = await archiveCourse(id);
+  return res.status(201).json({success: true, data: course})
+}
+
+const activateCourseController = async (req,res) =>{
+  const {id} = req.params
+  const course = await activateCourse(id)
+  return res.status(201).json({
+    success: true,
+    data : course
+  })
+}
+
+
+
 module.exports = {
   createCourseController,
   getCoursesController,
   getSingleCourseController,
-  updateCourseController
+  updateCourseController,
+  archiveCourseController,
+  activateCourseController
 };

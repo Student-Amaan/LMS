@@ -5,6 +5,8 @@ const {
   getCoursesController,
   getSingleCourseController,
   updateCourseController,
+  archiveCourseController,
+  activateCourseController,
 } = require("./course.controller");
 const authorize = require("../../middlewares/authorization");
 
@@ -36,5 +38,19 @@ courseRouter.patch(
   authenticate,
   authorize("admin"),
   updateCourseController,
+);
+
+courseRouter.patch(
+  "/courses/:id/archive",
+  authenticate,
+  authorize("admin"),
+  archiveCourseController,
+);
+
+courseRouter.patch(
+  "/courses/:id/active",
+  authenticate,
+  authorize("admin"),
+  activateCourseController,
 );
 module.exports = courseRouter;
