@@ -1,3 +1,4 @@
+const asyncWraper = require("../../utils/error-handler");
 const {
   createCourse,
   getCourses,
@@ -6,6 +7,7 @@ const {
   archiveCourse,
   activateCourse
 } = require("./course.service");
+
 
 const createCourseController = async (req, res) => {
   const course = await createCourse(req.body);
@@ -47,10 +49,10 @@ const activateCourseController = async (req,res) =>{
 
 
 module.exports = {
-  createCourseController,
-  getCoursesController,
-  getSingleCourseController,
-  updateCourseController,
-  archiveCourseController,
-  activateCourseController
+  createCourseController: asyncWraper(createCourseController),
+  getCoursesController: asyncWraper(getCoursesController),
+  getSingleCourseController: asyncWraper(getSingleCourseController),
+  updateCourseController: asyncWraper(updateCourseController),
+  archiveCourseController: asyncWraper(archiveCourseController),
+  activateCourseController: asyncWraper(activateCourseController),
 };
