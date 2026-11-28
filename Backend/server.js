@@ -6,6 +6,7 @@ const authRouter = require("./module/auth/auth.routes");
 const errorMiddleware = require("./middlewares/error.middleware");
 const courseRouter = require("./module/courses/course.routes");
 const cookieParser = require("cookie-parser");
+const studentRouter = require("./module/student/student.routes");
 
 
 const app = express();
@@ -24,7 +25,8 @@ app.get("/users", (req, res) => {
 });
 
 app.use("/api/v1", authRouter);
-app.use("/api/v1", courseRouter)
+app.use("/api/v1", courseRouter);
+app.use("/api/v1", studentRouter)
 
 // Error middleware must be after routes
 app.use(errorMiddleware);

@@ -1,9 +1,7 @@
 const AppError = require("../../utils/app-error");
+const normalizeField = require("../../utils/normalize-function");
 const Course = require("./course.model");
 
-function normalizeName(name) {
-  return name.trim().toLowerCase();
-}
 
 const createCourse = async (data) => {
   if (!data) {
@@ -13,7 +11,8 @@ const createCourse = async (data) => {
   if (!name || !duration) {
     throw new AppError("Please fill all the required fields", 400);
   }
-  const normalizedName = normalizeName(name);
+  const normalizedName = normalizeField(name);
+  
   const courseExist = await Course.findOne({ name: normalizedName });
   if (courseExist) {
     throw new AppError("Course Already exists");
@@ -77,7 +76,7 @@ const updateCourse = async (id, data) => {
 
   // 6. Check duplicate course name
   if (name !== undefined) {
-    const normalizedName = normalizeName(name);
+    const normalizedName = normalizeField(name);
 
     const courseExist = await Course.findOne({
       name: normalizedName,
